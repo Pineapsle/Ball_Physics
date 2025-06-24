@@ -34,3 +34,5 @@ What You’d Simulate:
 What to add next:
 
     A coin that spins on the screen and makes a noise when hit
+
+    Ball reset functionality with keyboard press 'R'

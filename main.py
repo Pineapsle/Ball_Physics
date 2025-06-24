@@ -1,74 +1,25 @@
 import pygame
 import sys
+from config import *
+from ball import Ball
+from coin import Coin
+from trail import Trail
 
 # pygame setup
 pygame.init()
-WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Ball Physics Engine")
 clock = pygame.time.Clock()
 
-# Constants
-GRAVITY = 980               # pixels per second^2
-RESTITUTION = 0.8           # energy loss on bounce
-BALL_RADIUS = 20            # Size of the ball
-FPS = 60                    # Frames per second
 
-# Ball class
-class Ball:
-    def __init__(self, x, y):
-        self.pos = pygame.Vector2(x, y)                       # Position vector (x, y)
-        self.vel = pygame.Vector2(0,0)                        # Velocity vector (vx, vy)   
-        self.acc = pygame.Vector2(0, 0)                       # Acceleration vector (ax, ay)   
-        self.radius = BALL_RADIUS
-        self.dragging = False
-        self.prev_mouse_pos = pygame.Vector2(x, y)
-    
-    def apply_gravity(self):
-        self.acc.y = GRAVITY                                  # Applies constant downward acceleration due to gravity
-
-    def update(self, dt):
-        if not self.dragging:
-            self.vel += self.acc * dt                                 # Velocity changes due to acceleration
-            self.pos += self.vel * dt + 0.5 * self.acc * dt * dt      # Position changes due to velocity      Other formula: self.pos += self.vel * dt             
-
-            # Collision with ground
-            if self.pos.y + self.radius >= HEIGHT:
-                self.pos.y = HEIGHT - self.radius
-                self.vel.y *= -RESTITUTION
-            
-            # Collision with ceiling
-            if self.pos.y - self.radius <= 0:
-                self.pos.y = self.radius
-                self.vel.y *= -RESTITUTION
-            
-            # Collision with walls
-            if self.pos.x - self.radius <= 0:
-                self.pos.x = self.radius
-                self.vel.x *= -RESTITUTION
-
-            if self.pos.x + self.radius >= WIDTH:
-                self.pos.x = WIDTH - self.radius
-                self.vel.x *= -RESTITUTION
-    
-    def draw(self, screen):
-        pygame.draw.circle(screen, (255, 100, 100), (int(self.pos.x), int(self.pos.y)), self.radius)
-        if self.dragging:
-            pygame.draw.line(screen, (0, 255, 0), self.prev_mouse_pos, pygame.mouse.get_pos(), 2)
-    
-    def start_drag(self, mouse_pos):
-        if (self.pos - mouse_pos).length() <= self.radius:
-            self.dragging = True
-            self.prev_mouse_pos = mouse_pos
-    
-    def end_drag(self, mouse_pos):
-        if self.dragging:
-            drag_vector = mouse_pos - self.prev_mouse_pos
-            self.vel = drag_vector * 3 # Scaling throw power when thrown 
-            self.dragging = False
-    
-# Initialize ball
+# Initialize ball and coin
 ball = Ball(WIDTH // 2, HEIGHT // 2)
+coin = Coin(70, 45) 
+trail = Trail(50, (255, 100, 0))  
+
+
+last_relocate_time = pygame.time.get_ticks()
+
 
 # Main loop
 running = True
@@ -85,12 +36,34 @@ while running:
         
         elif event.type == pygame.MOUSEBUTTONUP:
             ball.end_drag(pygame.Vector2(pygame.mouse.get_pos()))
+        
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_r:                                # Reset the ball when 'R' is pressed
+                ball.reset()
     
     screen.fill((30, 30, 30))
 
     ball.apply_gravity()
     ball.update(dt)
     ball.draw(screen)
+
+    # Draw the basket from the Coin class
+    coin.draw(screen)
+
+    # Relocate the coin every 5 seconds
+    current_time = pygame.time.get_ticks()
+    if current_time - last_relocate_time > 5000:  # 10,000 milliseconds = 10 seconds
+        coin.relocate(WIDTH, HEIGHT)
+        last_relocate_time = current_time
+
+    # Check if the ball has scored
+    if coin.check_score(ball): 
+        print("Coin Collected!")
+        ball.boost()
+        coin.relocate(WIDTH, HEIGHT)
+    
+    trail.update(ball.pos, ball.velocity)
+    trail.draw(screen)
 
     pygame.display.flip()
 
