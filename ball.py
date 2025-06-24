@@ -1,7 +1,6 @@
 import pygame
 from config import *
 
-
 # Ball class
 class Ball:
     def __init__(self, x, y):

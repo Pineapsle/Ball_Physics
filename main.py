@@ -62,8 +62,8 @@ while running:
         ball.boost()
         coin.relocate(WIDTH, HEIGHT)
     
-    trail.update(ball.pos, ball.velocity)
-    trail.draw(screen)
+    #trail.update(ball.pos, ball.velocity)
+    #trail.draw(screen)
 
     pygame.display.flip()
 
