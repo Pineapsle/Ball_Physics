@@ -4,6 +4,7 @@ from config import *
 from ball import Ball
 from coin import Coin
 from trail import Trail
+from sound import play_sound_background as sound
 
 # pygame setup
 pygame.init()
@@ -96,7 +97,7 @@ while running:
         # Draw the basket from the Coin class
         coin.draw(screen)
 
-        # Relocate the coin every 5 seconds
+        # Relocate the coin every 7 seconds
         current_time = pygame.time.get_ticks()
         if current_time - last_relocate_time > 7000:  # 10,000 milliseconds = 10 seconds
             coin.relocate(WIDTH, HEIGHT)
@@ -105,8 +106,10 @@ while running:
         # Check if the ball has scored
         if coin.check_score(ball): 
             print("Coin Collected!")
+            last_relocate_time = pygame.time.get_ticks()
             ball.boost()
             coin.relocate(WIDTH, HEIGHT)
+            sound()
     
     #trail.update(ball.pos, ball.velocity)
     #trail.draw(screen)
