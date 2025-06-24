@@ -12,6 +12,30 @@ pygame.display.set_caption("Ball Physics Engine")
 clock = pygame.time.Clock()
 
 
+# Home Screen
+def home_screen():
+    font = pygame.font.Font(None, 74)
+    text = font.render("Ball Physics Engine", True, (255, 255, 255))
+    text_rect = text.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 50))
+
+    start_text = font.render("Click to Start", True, (255, 255, 0))
+    start_rect = start_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 50))
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                return  # Exit the home screen and start the game
+
+        screen.fill((30, 30, 30))
+        screen.blit(text, text_rect)
+        screen.blit(start_text, start_rect)
+        pygame.display.flip()
+
+home_screen()  # Show the home screen before starting the game
+
 # Initialize ball and coin
 ball = Ball(WIDTH // 2, HEIGHT // 2)
 coin = Coin(70, 45) 
@@ -52,7 +76,7 @@ while running:
 
     # Relocate the coin every 5 seconds
     current_time = pygame.time.get_ticks()
-    if current_time - last_relocate_time > 5000:  # 10,000 milliseconds = 10 seconds
+    if current_time - last_relocate_time > 7000:  # 10,000 milliseconds = 10 seconds
         coin.relocate(WIDTH, HEIGHT)
         last_relocate_time = current_time
 
