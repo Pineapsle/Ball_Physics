@@ -12,14 +12,21 @@ pygame.display.set_caption("Ball Physics Engine")
 clock = pygame.time.Clock()
 
 
-# Home Screen
+# Home Screen with two buttons: Classic and Coin
 def home_screen():
     font = pygame.font.Font(None, 74)
-    text = font.render("Ball Physics Engine", True, (255, 255, 255))
-    text_rect = text.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 50))
+    title_text = font.render("Ball Physics Engine", True, (255, 255, 255))
+    title_rect = title_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 100))
 
-    start_text = font.render("Click to Start", True, (255, 255, 0))
-    start_rect = start_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 50))
+    button_font = pygame.font.Font(None, 56)
+    classic_text = button_font.render("Classic Mode", True, (0, 0, 0))
+    coin_text = button_font.render("Coin Mode", True, (0, 0, 0))
+
+    # Button rectangles
+    classic_rect = pygame.Rect(WIDTH // 2 - 170, HEIGHT // 2, 340, 70)
+    coin_rect = pygame.Rect(WIDTH // 2 - 170, HEIGHT // 2 + 100, 340, 70)
+
+    global mode
 
     while True:
         for event in pygame.event.get():
@@ -27,11 +34,25 @@ def home_screen():
                 pygame.quit()
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                return  # Exit the home screen and start the game
+                mouse_pos = pygame.mouse.get_pos()
+                if classic_rect.collidepoint(mouse_pos):
+                    mode = "classic"
+                    return
+                elif coin_rect.collidepoint(mouse_pos):
+                    mode = "coin"
+                    return
 
         screen.fill((30, 30, 30))
-        screen.blit(text, text_rect)
-        screen.blit(start_text, start_rect)
+        screen.blit(title_text, title_rect)
+
+        # Draw buttons
+        pygame.draw.rect(screen, (200, 200, 200), classic_rect)
+        pygame.draw.rect(screen, (200, 200, 0), coin_rect)
+
+        # Draw button text centered
+        screen.blit(classic_text, classic_text.get_rect(center=classic_rect.center))
+        screen.blit(coin_text, coin_text.get_rect(center=coin_rect.center))
+
         pygame.display.flip()
 
 home_screen()  # Show the home screen before starting the game
@@ -71,20 +92,21 @@ while running:
     ball.update(dt)
     ball.draw(screen)
 
-    # Draw the basket from the Coin class
-    coin.draw(screen)
+    if mode == "coin":
+        # Draw the basket from the Coin class
+        coin.draw(screen)
 
-    # Relocate the coin every 5 seconds
-    current_time = pygame.time.get_ticks()
-    if current_time - last_relocate_time > 7000:  # 10,000 milliseconds = 10 seconds
-        coin.relocate(WIDTH, HEIGHT)
-        last_relocate_time = current_time
+        # Relocate the coin every 5 seconds
+        current_time = pygame.time.get_ticks()
+        if current_time - last_relocate_time > 7000:  # 10,000 milliseconds = 10 seconds
+            coin.relocate(WIDTH, HEIGHT)
+            last_relocate_time = current_time
 
-    # Check if the ball has scored
-    if coin.check_score(ball): 
-        print("Coin Collected!")
-        ball.boost()
-        coin.relocate(WIDTH, HEIGHT)
+        # Check if the ball has scored
+        if coin.check_score(ball): 
+            print("Coin Collected!")
+            ball.boost()
+            coin.relocate(WIDTH, HEIGHT)
     
     #trail.update(ball.pos, ball.velocity)
     #trail.draw(screen)
