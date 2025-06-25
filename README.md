@@ -17,7 +17,7 @@ This project demonstrates core principles of Newtonian mechanics, including grav
 
 ## 📸 Demo
 
-Coming Soon!
+[🎬 Watch the Demo](demo/demo_classic.mp4)
 
 ---
 
