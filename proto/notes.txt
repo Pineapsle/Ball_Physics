@@ -1,0 +1,38 @@
+Core Concepts You’d Need:
+
+    Kinematics: Use Newtonian equations of motion.
+
+    Collision detection: To know when the ball hits a surface.
+
+    Collision response: To handle bouncing, including velocity reversal and energy loss.
+
+    Time stepping: Update the simulation over small intervals.
+
+
+
+What You’d Simulate:
+
+    Ball bouncing on the ground:
+        
+        Apply gravity (g = 9.8 m/s²) each frame.
+
+        Check if the ball’s y-position is at or below the ground.
+
+        Reverse y-velocity when it hits (and maybe multiply by a coefficient like 0.8 for energy loss).
+
+    Ball inside a sphere:
+    
+        Use 3D coordinates (x, y, z).
+
+        Check if the distance from the ball's center to the origin exceeds the radius.
+
+        Reflect velocity vector based on the collision normal.
+
+
+
+
+What to add next:
+
+    A coin that spins on the screen and makes a noise when hit
+
+    Ball reset functionality with keyboard press 'R'
