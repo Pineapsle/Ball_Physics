@@ -1,0 +1,6 @@
+# config.py
+
+GRAVITY = 980
+FPS = 60
+RESTITUTION = 0.8
+BALL_RADIUS = 20
