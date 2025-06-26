@@ -38,6 +38,7 @@ class GameScreen(Widget):
             play(self.sounds["coin"])
             self.ball.boost()
             self.coin.relocate()
+            self.last_coin_time = 0
 
     def on_touch_down(self, touch):
         self.ball.on_touch_down(touch)
