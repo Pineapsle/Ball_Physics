@@ -88,9 +88,24 @@ Control a bouncing ball by dragging and releasing it to collect spinning golden 
 - Basic Linear Algebra
 
 ### Configurations
-- GRAVITY = 980               # Gravitational force (pixels/second²)
-- FPS = 60                    # Target frame rate
-- RESTITUTION = 0.8           # Bounce factor (0.0 = no bounce, 1.0 = perfect bounce)
-- BALL_RADIUS = 20            # Ball size in pixels
+-* **GRAVITY** = 980               # Gravitational force (pixels/second²)
+- **FPS** = 60                    # Target frame rate
+- **RESTITUTION** = 0.8           # Bounce factor (0.0 = no bounce, 1.0 = perfect bounce)
+- **BALL_RADIUS** = 20            # Ball size in pixels
 
+## 🎨 Customization options
 
+### Visual Customizations
+- **Ball Color:** Modify the Color(1, 0.4, 0.4) in ball.py
+- **Coin Color:** Change Color(1, 1, 0) in coin.py
+- **Trail Effects:** Adjust opacity and color change timing in trail.py
+
+### Gameplay Mechanics
+- **Coin Relocation:** Modify the 10-second timer in main.py
+- **Boost Strength:** Adjust the boost multiplier in ball.py
+- **Trail Length:** Change max_length parameter in Trail initialization
+
+## 🐛 Troubleshooting
+- **Game won't start:** Ensure Kivy is properly installed and all Python files are in the same directory
+- **No sound:** Verify boink_sound.wav is present in the project directory
+- **Performance issues:** Try reducing FPS in config.py or trail length in main.py
