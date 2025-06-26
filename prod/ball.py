@@ -26,22 +26,22 @@ class Ball(Widget):
         self.vel += self.acc * dt
         self.pos_vec += self.vel * dt + 0.5 * self.acc * dt * dt
 
-            # Floor
+        # Floor
         if self.pos_vec.y - self.radius <= 0:
             self.pos_vec.y = self.radius
             self.vel.y *= -RESTITUTION
 
-            # Ceiling
+        # Ceiling
         if self.pos_vec.y + self.radius >= Window.height:
             self.pos_vec.y = Window.height - self.radius
             self.vel.y *= -RESTITUTION
 
-            # Left wall
+        # Left wall
         if self.pos_vec.x - self.radius <= 0:
             self.pos_vec.x = self.radius
             self.vel.x *= -RESTITUTION
 
-            # Right wall
+        # Right wall
         if self.pos_vec.x + self.radius >= Window.width:
             self.pos_vec.x = Window.width - self.radius
             self.vel.x *= -RESTITUTION
