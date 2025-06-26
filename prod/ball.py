@@ -49,11 +49,13 @@ class Ball(Widget):
         self.circle.pos = (self.pos_vec.x - self.radius, self.pos_vec.y - self.radius)
 
     def on_touch_down(self, touch):
+        self.vel -= self.vel * 0.5 # Reduce velocity to make it easier to drag
         self.dragging = True
         self.prev_touch = Vector(*touch.pos)
 
     def on_touch_up(self, touch):
         if self.dragging:
+            self.acc = Vector(0, -GRAVITY)
             drag_vector = Vector(*touch.pos) - self.prev_touch
             self.vel = drag_vector * 3
             self.dragging = False
