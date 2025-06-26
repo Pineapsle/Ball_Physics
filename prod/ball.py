@@ -1,5 +1,3 @@
-# ball.py
-
 from kivy.uix.widget import Widget
 from kivy.graphics import Ellipse, Color
 from kivy.vector import Vector
@@ -18,37 +16,35 @@ class Ball(Widget):
         self.prev_touch = None
 
         with self.canvas:
-            # Use RGB values out of 255 by dividing each by 255.0
-            self.color = Color(255/255, 102/255, 102/255)
+            self.color = Color(1, 0.4, 0.4)
             self.circle = Ellipse(pos=(self.pos_vec.x - self.radius, self.pos_vec.y - self.radius), size=(2*self.radius, 2*self.radius))
 
         self.size = (2*self.radius, 2*self.radius)
         self.center = self.pos_vec
 
     def update(self, dt):
-        if not self.dragging:
-            self.vel += self.acc * dt
-            self.pos += self.vel * dt + 0.5 * self.acc * dt * dt
+        self.vel += self.acc * dt
+        self.pos_vec += self.vel * dt + 0.5 * self.acc * dt * dt
 
             # Floor
-            if self.pos_vec.y - self.radius <= 0:
-                self.pos_vec.y = self.radius
-                self.vel.y *= -RESTITUTION
+        if self.pos_vec.y - self.radius <= 0:
+            self.pos_vec.y = self.radius
+            self.vel.y *= -RESTITUTION
 
             # Ceiling
-            if self.pos_vec.y + self.radius >= Window.height:
-                self.pos_vec.y = Window.height - self.radius
-                self.vel.y *= -RESTITUTION
+        if self.pos_vec.y + self.radius >= Window.height:
+            self.pos_vec.y = Window.height - self.radius
+            self.vel.y *= -RESTITUTION
 
             # Left wall
-            if self.pos_vec.x - self.radius <= 0:
-                self.pos_vec.x = self.radius
-                self.vel.x *= -RESTITUTION
+        if self.pos_vec.x - self.radius <= 0:
+            self.pos_vec.x = self.radius
+            self.vel.x *= -RESTITUTION
 
             # Right wall
-            if self.pos_vec.x + self.radius >= Window.width:
-                self.pos_vec.x = Window.width - self.radius
-                self.vel.x *= -RESTITUTION
+        if self.pos_vec.x + self.radius >= Window.width:
+            self.pos_vec.x = Window.width - self.radius
+            self.vel.x *= -RESTITUTION
 
         self.circle.pos = (self.pos_vec.x - self.radius, self.pos_vec.y - self.radius)
 
@@ -67,7 +63,8 @@ class Ball(Widget):
             self.vel += self.vel.normalize() * 300
         else:
             self.vel = Vector(0, 300)
- 
+
     def reset(self):
         self.pos_vec = Vector(Window.width / 2, Window.height / 2)
         self.vel = Vector(0, 0)
+        
