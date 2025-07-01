@@ -1,3 +1,5 @@
+# coin.py
+
 from kivy.uix.widget import Widget
 from kivy.graphics import Ellipse, Color, Line
 from kivy.vector import Vector
