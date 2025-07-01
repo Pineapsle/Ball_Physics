@@ -35,14 +35,13 @@ Control a bouncing ball by dragging and releasing it to collect spinning golden 
 
 1. **Launch the game** - The ball starts in the center of the screen
 2. **Drag the ball** - Click or touch and drag to aim your shot
-3. **Release to launch** - Let go to propel the ball in the desired direction
+3. **Release to launch** - Let go to propel the ball in the desired direction (ball will slightly slow down when held)
 4. **Collect coins** - Guide the ball to touch the spinning golden coins
 5. **Get boosted** - Collecting coins gives the ball an automatic speed boost
 6. **Keep playing** - Coins will relocate automatically, providing endless gameplay
 
 ## 📸 Demo
-
-[🎬 Watch the Demo](demo/demo_classic.mp4)
+![🎬 Watch the Demo](prod/demo/video_demo_ball.gif)
 
 ## 🛠️ Technical Architecture
 
@@ -94,8 +93,6 @@ Control a bouncing ball by dragging and releasing it to collect spinning golden 
 - RESTITUTION = 0.8           # Bounce factor (0.0 = no bounce, 1.0 = perfect bounce)
 - BALL_RADIUS = 20            # Ball size in pixels
 
-=======
->>>>>>> d52ce4324a1d48ae7afa0d1097afea62eba883c8
 
 ## 🎯 How to Play
 
